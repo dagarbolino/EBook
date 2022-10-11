@@ -1,0 +1,8 @@
+.idea
+env/
+db.sqlite3
+media/
+.DS_Store
+assets/
+*.pyc
+.env
