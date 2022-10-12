@@ -3,13 +3,14 @@ from django.contrib import admin
 from django.urls import path
 from shop import settings
 from store.views import index, product_detail, add_to_cart, cart, delete_cart, create_checkout_session, checkout_success,stripe_webhook
-from accounts.views import signup, logout_user, login_user
+from accounts.views import signup, logout_user, login_user, profile
 
 urlpatterns = [
     path('', index, name="index"),
     path('admin/', admin.site.urls),
     path('signup/', signup, name="signup"),
     path('logout/', logout_user, name="logout"),
+    path('profile/', profile, name="profile"),
     path('login/', login_user, name="login"),
     path('stripe-webhook/', stripe_webhook, name="stripe-webhook"),
     path('cart/', cart, name="cart"),

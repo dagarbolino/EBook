@@ -50,20 +50,22 @@ def cart(request):
 
 def create_checkout_session(request):
     cart = request.user.cart
-
     line_items = [{"price": order.product.stripe_id,
                    "quantity": order.quantity} for order in cart.orders.all()]
 
     session = stripe.checkout.Session.create(
-        locale="fr",
         payment_method_types=['card'],
         line_items=line_items,
         mode='payment',
+        locale="fr",
+        customer_email=request.user.email,
+        shipping_address_collection={"allowed_countries": ["FR", "US", "CA"]},
         success_url=request.build_absolute_uri(reverse('checkout-success')),
-        cancel_url='http://127.0.0.1:8000/',
+        cancel_url=request.build_absolute_uri(reverse('cart')),
+        # cancel_url='http://127.0.0.1:8000/',
     )
 
-    return redirect(session.url, code=303)
+    return redirect(session.url)
 
 
 def checkout_success(request):
